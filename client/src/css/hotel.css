@@ -19,7 +19,8 @@ input, select{
 
 select{
     background-color: white;
-    width: 187px;
+    width: 20%;
+    max-width: 185px;
 }
 
 @media screen {
