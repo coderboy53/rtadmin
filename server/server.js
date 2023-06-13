@@ -34,5 +34,11 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/hotel/add", (req, res) => {
+    console.log(req.body);
+    return res.status(200).json({message: 'Hotel added successfully'});
 
 });
+
+app.put('/api/hotel/update', (req, res) => {
+    
+})
