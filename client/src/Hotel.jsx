@@ -64,7 +64,7 @@ const Hotel = () => {
                 <div className="right">
                     <label htmlFor="country">Country:<span style={{color:'red'}}>*</span></label>
                     <input type="text" name="country" id="country" required onChange={handleChange}/><br />
-                    <label htmlFor="starRate">Star Rating:<span style={{color:'red'}}>*</span></label><br />
+                    <label htmlFor="starRate">Star Rating:<span style={{color:'red'}}>*</span></label>
                     <select name="starRate" id="starRate" required onChange={handleChange}>
                         <option value="null" disabled selected>Select</option>
                         <option value="1">1</option>
