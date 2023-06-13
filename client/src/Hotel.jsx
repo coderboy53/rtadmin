@@ -18,12 +18,12 @@ const Hotel = () => {
     const handleAdd = async (event) => {
         event.preventDefault();
         try{
-            const response = await fetch('http://127.0.0.1/api/hotel/add', {
+            const response = await fetch('http://127.0.0.1:4242/api/hotel/add', {
                 method: 'POST',
                 headers: {'Content-Type' : 'application/json'},
                 body: JSON.stringify(hotel)  
             });
-            const jsonData = response.json();
+            const jsonData = await response.json();
             alert(jsonData.message);
         }
         catch(error)
