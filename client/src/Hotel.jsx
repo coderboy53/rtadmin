@@ -11,13 +11,25 @@ const Hotel = () => {
         entry[name] = event.target.value;
         setHotel({...hotel, ...entry});
     }
-    const handleUpdate = (event) => {
+    const handleUpdate = async (event) => {
         event.preventDefault();
         console.log(hotel);
     };
-    const handleAdd = (event) => {
+    const handleAdd = async (event) => {
         event.preventDefault();
-
+        try{
+            const response = await fetch('http://127.0.0.1/api/hotel/add', {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(hotel)  
+            });
+            const jsonData = response.json();
+            alert(jsonData.message);
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
     };
     return (
        <>
