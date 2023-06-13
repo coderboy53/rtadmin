@@ -13,7 +13,19 @@ const Hotel = () => {
     }
     const handleUpdate = async (event) => {
         event.preventDefault();
-        console.log(hotel);
+        try{
+            const response = await fetch('http://127.0.0.1:4242/api/hotel/update', {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(hotel)  
+            });
+            const jsonData = await response.json();
+            alert(jsonData.message);
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
     };
     const handleAdd = async (event) => {
         event.preventDefault();
