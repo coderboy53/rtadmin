@@ -25,8 +25,15 @@ app.post("/api/login", (req, res) => {
     
 });
 
-app.post("/api/hotel/add", (req, res) => {
-    connection.execute('INSERT INTO Users VALUES (3, "xyzmitra", "sohamhello")')
+app.post("/api/hotel/add", async (req, res) => {
+    const data = req.body;
+    if(!data.propId)
+    {
+        let count = await connection.query('SELECT COUNT(*) FROM Hotel');
+        count = count+1;
+        data = {...data, ...{propId:count}};
+    }
+    connection.execute(`INSERT INTO Hotel ([Hotel_Name], [Hotel_Address], [City], [State], [Latitude], [Room_Count], [Country], [Star_Rating], [Hotel_Sort_Name], [Zip_Code], [Telephone_No], [Longitude], [Property_ID]) VALUES (${data.hName},${data.hAdd},${data.city}, ${data.state}, ${data.latitude}, ${data.rCount}, ${data.country}, ${data.starRate}, ${data.hSortName}, ${data.zipCode}, ${data.telNo}, ${data.longitude}, ${data.propId})`)
     .then(data => {
         console.log(JSON.stringify(data, null, 2));
     })
@@ -36,19 +43,6 @@ app.post("/api/hotel/add", (req, res) => {
 
 });
 
-app.get("/api/test", async (req, res) => {
-    try{
-        const users = await connection.query('SELECT * FROM Users');
-        console.log(JSON.stringify(users, null, 2));
-    }
-    catch(error)
-    {
-        console.error(error);
-    }
-})
-
 app.put('/api/hotel/update', (req, res) => {
     
 })
-
-// efd9259cbd96593e6cb779947f8996b7271ddcd13e44f8afda8ae6bdf37fc9cb22911f38d0057a745e1b820cb1f0ab7728fd77d3a83c5547f14a54bbaec081fb 
