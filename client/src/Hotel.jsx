@@ -87,7 +87,7 @@ const Hotel = () => {
                 <input type="radio" name="radio" id="value" onChange={()=>{setEnabled(!enabled)}}/>Value<span style={{color:'red'}}>*</span> <br />
                 {
                     enabled? (
-                        <input type="text" name="propId" id="propId" size={50} required/>
+                        <input type="text" name="propId" id="propId" size={50} required onChange={handleChange}/>
                     ):
                     (
                         <input type="text" name="propId" id="propId" size={50} disabled style={{backgroundColor:'#bcbcbc'}}/>
