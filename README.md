@@ -28,4 +28,3 @@ The remaining tasks in this project
 - Database integration
 - Login authentication and session management and some security
 - Search mechanism in dashboard
-
