@@ -26,14 +26,14 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/hotel/add", async (req, res) => {
-    const data = req.body;
+    let data = req.body;
     if(!data.propId)
     {
         let count = await connection.query('SELECT COUNT(*) FROM Hotel');
-        count = count+1;
+        count = (count[0].Expr1000) +1;
         data = {...data, ...{propId:count}};
     }
-    connection.execute(`INSERT INTO Hotel ([Hotel_Name], [Hotel_Address], [City], [State], [Latitude], [Room_Count], [Country], [Star_Rating], [Hotel_Sort_Name], [Zip_Code], [Telephone_No], [Longitude], [Property_ID]) VALUES (${data.hName},${data.hAdd},${data.city}, ${data.state}, ${data.latitude}, ${data.rCount}, ${data.country}, ${data.starRate}, ${data.hSortName}, ${data.zipCode}, ${data.telNo}, ${data.longitude}, ${data.propId})`)
+    connection.execute(`INSERT INTO Hotel ([Hotel_Name], [Hotel_Address], [City], [State], [Latitude], [Room_Count], [Country], [Star_Rating], [Hotel_Sort_Name], [Zip_Code], [Telephone_Number], [Longitude], [Property_ID]) VALUES ("${data.hName}","${data.hAdd}","${data.city}", "${data.state}", "${data.latitude}", ${data.rCount}, "${data.country}", "${data.starRate}", "${data.hSortName}", "${data.zipCode}", "${data.telNo}", "${data.longitude}", "${data.propId}")`)
     .then(data => {
         console.log(JSON.stringify(data, null, 2));
     })
@@ -44,5 +44,5 @@ app.post("/api/hotel/add", async (req, res) => {
 });
 
 app.put('/api/hotel/update', (req, res) => {
-    
+    const data = req.body;    
 })
