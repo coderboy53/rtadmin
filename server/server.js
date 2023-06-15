@@ -27,9 +27,11 @@ app.post("/api/login", (req, res) => {
 
 app.post("/api/hotel/add", async (req, res) => {
     let data = req.body;
+    let result = await connection.query(`SELECT Hotel_Code FROM Hotel WHERE Hotel_Name = "${data.hName}"`);
     if(!data.propId)
     {
         let count = await connection.query('SELECT COUNT(*) FROM Hotel');
+        console.log(count);
         count = (count[0].Expr1000) +1;
         data = {...data, ...{propId:count}};
     }
@@ -40,7 +42,6 @@ app.post("/api/hotel/add", async (req, res) => {
     .catch(error => {
         console.error(error);
     });
-
 });
 
 app.put('/api/hotel/update', (req, res) => {
