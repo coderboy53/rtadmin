@@ -11,6 +11,7 @@ The tech stack involved in the project is:
 - Frontend : React.js and CSS for styles
 - Backend : CRUD API with express.js
 - Database : Microsoft Access
+- Environment : Microsoft Windows
 
 ## Functionalities
 
