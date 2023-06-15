@@ -25,6 +25,6 @@ The functionalities of the web app include
 The remaining tasks in this project
 
 - Styles (very important)
-- Database integration
+- Database integration (Done)
 - Login authentication and session management and some security
-- Search mechanism in dashboard
+- Search mechanism in dashboard, and dashboard displaying name of user, and ability to navigate to hotel adding
