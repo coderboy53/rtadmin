@@ -19,9 +19,18 @@ app.get("/api", (req, res) => {
     res.json({"users":["userOne","userTwo","userThree"]})
 });
 
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
     const uname = req.body.user;
     const passwd = req.body.pass;
+    let passHash = await connection.query(`SELECT [Password] FROM Users WHERE Username = "${uname}"`);
+    passHash = passHash[0].Password;
+    if(passwd===passHash)
+    {
+        res.status(200).json({message: 'Login successful'});
+    }
+    else{
+        res.status(401).json({message: "Incorrect credentials"});   
+    }
     
 });
 
