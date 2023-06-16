@@ -1,5 +1,6 @@
 'use strict';
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
@@ -9,6 +10,7 @@ const app = express();
 const connection = ADODB.open('Provider=Microsoft.ACE.OLEDB.12.0;Data Source=rtadmin-db.accdb;Persist Security Info=False;',true)
 app.use(cors());
 app.use(express.json());
+const secretKey = process.env.JWT_SECRET
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
@@ -26,7 +28,8 @@ app.post("/api/login", async (req, res) => {
     passHash = passHash[0].Password;
     if(passwd===passHash)
     {
-        res.status(200).json({message: 'Login successful'});
+        const token = jwt.sign(uname,secretKey,{expiresIn: '1800'});
+        res.status(200).cookie().json({message: 'Login successful'});
     }
     else{
         res.status(401).json({message: "Incorrect credentials"});   
