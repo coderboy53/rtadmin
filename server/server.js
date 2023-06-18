@@ -28,8 +28,8 @@ app.post("/api/login", async (req, res) => {
     passHash = passHash[0].Password;
     if(passwd===passHash)
     {
-        const token = jwt.sign(uname,secretKey,{expiresIn: '1800'});
-        res.status(200).cookie().json({message: 'Login successful'});
+        const token = jwt.sign({data:uname},secretKey, {expiresIn: 1800});
+        res.status(200).json({message: 'Login successful', token});
     }
     else{
         res.status(401).json({message: "Incorrect credentials"});   
