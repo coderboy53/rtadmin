@@ -2,6 +2,7 @@ import './css/login.css'
 import { useState } from 'react';
 import {SHA512} from 'crypto-js';
 import { useNavigate } from 'react-router-dom'
+import jwt from 'jsonwebtoken';
 
 
 const Login = () => {
@@ -25,8 +26,9 @@ const Login = () => {
             });
             jsonData = await response.json();
             if(response.ok){
-
-                navigate('/dashboard');
+                console.log(jsonData.token);
+                Cookies.set('jwt', token,);
+                navigate("/dashboard");
             }
             else
             {
