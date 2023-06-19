@@ -2,8 +2,8 @@ import './css/login.css'
 import { useState } from 'react';
 import {SHA512} from 'crypto-js';
 import { useNavigate } from 'react-router-dom'
-import jwt from 'jsonwebtoken';
-
+import { useJwt } from "react-jwt";
+import { Cookies } from 'react-cookie';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -26,8 +26,9 @@ const Login = () => {
             });
             jsonData = await response.json();
             if(response.ok){
-                console.log(jsonData.token);
-                Cookies.set('jwt', token,);
+                const jwToken = jsonData.token;
+                const cookies = new Cookies;
+                cookies.set('jwt',jwToken,{path: '/'});
                 navigate("/dashboard");
             }
             else
