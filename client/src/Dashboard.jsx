@@ -1,18 +1,24 @@
 import Unauthorized from "./assets/Unauthorized";
 import { useEffect } from "react";
+import { useJwt } from "react-jwt";
+import { Cookies } from "react-cookie";
 const Dashboard = () => {
-    const isJwtSet = Cookies.get('jwt') !== undefined;
+    const cookies = new Cookies;
+    const isJwtSet = cookies.get('jwt') !== undefined;
+    useEffect(() => {
+
+    });
     if(isJwtSet)
-    {
-        return <Unauthorized />
-    }
-    else
     {
         return (
             <>
                 <h1>Dashboard</h1>
             </>
         );
+    }
+    else
+    {
+        return <Unauthorized />;
     }
 }
 
