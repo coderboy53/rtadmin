@@ -1,12 +1,20 @@
 import Unauthorized from "./assets/Unauthorized";
 import { useEffect } from "react";
-import { useJwt } from "react-jwt";
+import { isExpired, useJwt } from "react-jwt";
 import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
+    const navigate = useNavigate();
     const cookies = new Cookies;
-    const isJwtSet = cookies.get('jwt') !== undefined;
+    let token = cookies.get('jwt');
+    let isJwtSet = token !== undefined;
+    const { decodedToken, isExpired} = useJwt(token);
     useEffect(() => {
-
+       if (isExpired) {
+            cookies.remove('jwt');
+            isJwtSet = false;
+       } 
+       console.log('effect');
     });
     if(isJwtSet)
     {
@@ -18,7 +26,7 @@ const Dashboard = () => {
     }
     else
     {
-        return <Unauthorized />;
+        navigate('/login');
     }
 }
 
