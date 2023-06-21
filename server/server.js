@@ -1,5 +1,4 @@
 'use strict';
-const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const dotenv = require('dotenv').config();
@@ -12,15 +11,13 @@ app.use(cors());
 app.use(express.json());
 const secretKey = process.env.JWT_SECRET
 
+//sets the api to start listening
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-app.get("/api", (req, res) => {
-    res.json({"users":["userOne","userTwo","userThree"]})
-});
-
+//route for logging in
 app.post("/api/login", async (req, res) => {
     const uname = req.body.user;
     const passwd = req.body.pass;
@@ -37,6 +34,7 @@ app.post("/api/login", async (req, res) => {
     
 });
 
+//route for adding hotel
 app.post("/api/hotel/add", async (req, res) => {
     let data = req.body;
     let result = await connection.query(`SELECT Hotel_Code FROM Hotel WHERE Hotel_Name = "${data.hName}"`);
@@ -56,6 +54,7 @@ app.post("/api/hotel/add", async (req, res) => {
     });
 });
 
+//route for updating hotel
 app.put('/api/hotel/update', (req, res) => {
     const data = req.body;    
 })

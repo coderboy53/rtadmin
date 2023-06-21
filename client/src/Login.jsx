@@ -6,16 +6,21 @@ import { useJwt } from "react-jwt";
 import { Cookies } from 'react-cookie';
 
 const Login = () => {
+    // states for storing credentials
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    //for redirecting to dashboard after login
     const navigate = useNavigate();
-    let jsonData = {};
+
+    // login functionality
     const handleSubmit = async (event) => {
         event.preventDefault();
         const credentials = {
             user: username,
             pass: password,
         };
+        let jsonData = {};
         try{
             const response = await fetch('http://127.0.0.1:4242/api/login', {
                 method: 'POST',
@@ -40,7 +45,7 @@ const Login = () => {
         {
             console.log(error);
         }
-    }
+    };
     return (
         <div id='login'>
             <div id="login-tab">
