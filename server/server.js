@@ -55,6 +55,21 @@ app.post("/api/hotel/add", async (req, res) => {
 });
 
 //route for updating hotel
-app.put('/api/hotel/update', (req, res) => {
-    const data = req.body;    
+app.put('/api/hotel/update', async (req, res) => {
+    let data = req.body;    
+    let result = await connection.query(`SELECT Hotel_Code FROM Hotel WHERE Hotel_Name = "${data.hName}"`);
+    if(!data.propId)
+    {
+        let count = await connection.query('SELECT COUNT(*) FROM Hotel');
+        console.log(count);
+        count = (count[0].Expr1000) +1;
+        data = {...data, ...{propId:count}};
+    }
+    connection.execute(`UPDATE Hotel ([Hotel_Name], [Hotel_Address], [City], [State], [Latitude], [Room_Count], [Country], [Star_Rating], [Hotel_Sort_Name], [Zip_Code], [Telephone_Number], [Longitude], [Property_ID]) VALUES ("${data.hName}","${data.hAdd}","${data.city}", "${data.state}", "${data.latitude}", ${data.rCount}, "${data.country}", "${data.starRate}", "${data.hSortName}", "${data.zipCode}", "${data.telNo}", "${data.longitude}", "${data.propId}")`)
+    .then(data => {
+        console.log(JSON.stringify(data, null, 2));
+    })
+    .catch(error => {
+        console.error(error);
+    });
 })
