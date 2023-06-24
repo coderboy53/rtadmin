@@ -1,5 +1,5 @@
 import './css/hotel.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useJwt } from 'react-jwt';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ const Hotel = () => {
     // states for input enabled checking and hotel form data storing
     const [enabled, setEnabled] = useState(false);
     const [hotel, setHotel] = useState({});
+
+    // const formRef = useRef()
 
     // jwt expiry and authentication handling
     const navigate = useNavigate();
@@ -22,10 +24,21 @@ const Hotel = () => {
         entry[name] = event.target.value;
         setHotel({...hotel, ...entry});
     }
+    // handles form submit, added so that i can keep both native form validation as well as add my custom submit handling
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if(event.nativeEvent.submitter.value === 'add')
+        {
+            handleAdd();
+        }
+        else if(event.nativeEvent.submitter.value === 'update')
+        {
+            handleUpdate();
+        }
+    };
 
     //handling updating hotel details
-    const handleUpdate = async (event) => {
-        event.preventDefault();
+    const handleUpdate = async () => {
         try{
             const response = await fetch('http://127.0.0.1:4242/api/hotel/update', {
                 method: 'PUT',
@@ -42,8 +55,7 @@ const Hotel = () => {
     };
 
     //handling adding hotel entry
-    const handleAdd = async (event) => {
-        event.preventDefault();
+    const handleAdd = async () => {
         try{
             const response = await fetch('http://127.0.0.1:4242/api/hotel/add', {
                 method: 'POST',
@@ -69,7 +81,7 @@ const Hotel = () => {
         return (
         <>
             <h2>Add New Hotel</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="left">
                     <label htmlFor="hName">Hotel Name:<span style={{color:'red'}}>*</span></label>
                     <input type="text" name="hName" id="hName" required onChange={handleChange}/><br />
@@ -116,8 +128,8 @@ const Hotel = () => {
                         <input type="text" name="propId" id="propId" size={50} disabled style={{backgroundColor:'#bcbcbc'}}/>
                     )
                 } <br />
-                <button onClick={handleUpdate}>Save and Close</button>
-                <button onClick={handleAdd}>Save and Add</button>
+                <button value="update">Save and Close</button>
+                <button value="add">Save and Add</button>
                 <button type='reset'>Reset</button>
             </form>
        </> 
