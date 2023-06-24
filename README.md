@@ -31,4 +31,4 @@ The remaining tasks in this project
 - [X] Non-mandatory fields should be handled during insertion and updation carefully
 - [ ] Fix the still weird behavior of the property code field, setting it to clear out the input when value is deselected.
 
-- [ ] input field validation in hotel page not working on submit.
+- [X] input field validation in hotel page not working on submit.
