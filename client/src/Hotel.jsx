@@ -99,9 +99,9 @@ const Hotel = () => {
                     <label htmlFor="hSortName">Hotel Sort Name:<span style={{color:'red'}}>*</span></label>
                     <input type="text" name="hSortName" id="hSortName" required onChange={handleChange}/><br />
                     <label htmlFor="zipCode">Zip Code:</label>
-                    <input type="text" name="zipCode" id="zipCode" onChange={handleChange}/><br />
+                    <input type="text" name="zipCode" id="zipCode" pattern="[1-8][0-9]{5}" onChange={handleChange}/><br />
                     <label htmlFor="telNo">Telephone No:</label>
-                    <input type="text" name="telNo" id="telNo" onChange={handleChange}/><br />
+                    <input type="text" name="telNo" id="telNo" pattern="[1-9]{5}[0-9]{5}" onChange={handleChange}/><br />
                     <label htmlFor="longitude">Longitude:<span style={{color:'red'}}>*</span></label>
                     <input type="text" name="longitude" id="longitude" required onChange={handleChange}/><br />
                 </div>
