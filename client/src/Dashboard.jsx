@@ -1,4 +1,3 @@
-import Unauthorized from "./assets/Unauthorized";
 import { useEffect } from "react";
 import { useJwt } from "react-jwt";
 import { Cookies } from "react-cookie";
