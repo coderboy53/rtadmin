@@ -45,7 +45,6 @@ app.post("/api/hotel/add", async (req, res) => {
     if(!data.propId) // if property ID has been not been set, set property 
     {
         let count = await connection.query('SELECT COUNT(*) FROM Hotel'); // get the hotel code from the db
-        console.log(count);
         count = (count[0].Expr1000) +1;
         data = {...data, ...{propId:count}}; // set the propId as the hotel code
     }
