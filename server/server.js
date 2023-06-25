@@ -21,11 +21,12 @@ app.listen(port, () => {
 app.post("/api/login", async (req, res) => {
     const uname = req.body.user; // receive the username from the request body
     const passwd = req.body.pass; // receive the hashed password from the request body
-    let result = await connection.query(`SELECT [Password] FROM Users WHERE Username = "${uname}"`); //fetch the hashed password
+    let result = await connection.query(`SELECT [FullName], [Password] FROM Users WHERE Username = "${uname}"`); //fetch the hashed password
     const passHash = result[0].Password; // store the field value from the returned result
+    const fullName = result[0].FullName; // get the fullname of the user to put into jwt token
     if(passwd===passHash) // verify the hashes match
     {
-        const token = jwt.sign({data:uname},secretKey, {expiresIn: 1800}); // create jwt
+        const token = jwt.sign({username:uname, name:fullName},secretKey, {expiresIn: 3600}); // create jwt
         res.status(200).json({message: 'Login successful', token}); // add success message and jwt to response body as json
     }
     else{
@@ -33,6 +34,7 @@ app.post("/api/login", async (req, res) => {
     }
     
 });
+
 
 //route for adding hotel
 app.post("/api/hotel/add", async (req, res) => {
