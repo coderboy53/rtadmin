@@ -26,13 +26,37 @@ app.post("/api/login", async (req, res) => {
     const fullName = result[0].FullName; // get the fullname of the user to put into jwt token
     if(passwd===passHash) // verify the hashes match
     {
-        const token = jwt.sign({username:uname, name:fullName},secretKey, {expiresIn: 3600}); // create jwt
+        const token = jwt.sign({username:uname, name:fullName},secretKey, {expiresIn: "1d"}); // create jwt
         res.status(200).json({message: 'Login successful', token}); // add success message and jwt to response body as json
     }
     else{
         res.status(401).json({message: "Incorrect credentials"}); // failure
     }
     
+});
+
+// route for searching hotel
+app.post( "/api/dashboard/search", async (req, res) => {
+    const searchText = req.body.search; // holds the text entered into searchbar
+    let digitPattern = /^\d+$/; // regex pattern for checking whether string is digit only
+    let result;
+    if(digitPattern.test(searchText)) // if string is digit only, i.e, hotel code has been entered
+    {
+        let searchText = parseInt(searchText);
+        result = await connection.query(`SELECT * FROM Hotel WHERE Hotel_Code = ${searchText}`);
+    }
+    // string is alphanumeric, i.e, hotel name has been entered
+    else{
+        result = await connection.query(`SELECT * FROM Hotel WHERE Hotel_Name = "${searchText}"`);
+    }
+    if(result[0] !== undefined) //if the query result is not empty
+    {
+        res.status(200).json({message: "Hotel found", hotel: result[0]});
+    }
+    // if query result is empty
+    else{
+        res.status(404).json({message: "Hotel does not exist"});
+    }
 });
 
 
