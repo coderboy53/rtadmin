@@ -28,7 +28,5 @@ The remaining tasks in this project
 - [ ] Styles (very important)
 - [ ] Search mechanism in dashboard, and dashboard displaying name of user, and ability to navigate to hotel adding
 - [ ] Logout based on inactivity time (if possible)
-- [X] Non-mandatory fields should be handled during insertion and updation carefully
 - [ ] Fix the still weird behavior of the property code field, setting it to clear out the input when value is deselected.
 
-- [X] input field validation in hotel page not working on submit.
