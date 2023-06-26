@@ -1,44 +1,41 @@
 import { useState, useEffect } from "react";
-import { isExpired, decodeToken } from "react-jwt";
+import {decodeToken, useJwt } from "react-jwt";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs"
 import { FaHotel } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
-
+import './css/dashboard.css'
 
 const Dashboard = () => {
     // storing the search text
     const [searchText, setSearchText] = useState('');
     const [displayText, setDisplayText] = useState({});
-
     // for navigation purposes
     const navigate = useNavigate();
 
     // for sending the search text to the api
     const handleSearch = async (event) => {
         event.preventDefault();
-        try 
-        {
+        try {
             const response = await fetch("http://127.0.0.1:4242/api/dashboard/search", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({search: searchText})
+                body: JSON.stringify({ search: searchText })
             });
             const jsonData = await response.json();
             const status = response.ok;
-            let text = {...jsonData, ...{status}};
+            let text = { ...jsonData, ...{ status } };
             setDisplayText(text);
         } catch (error) {
             console.error(error);
-        } 
+        }
     };
 
     const SearchResult = () => {
-        if(displayText.status)
-        {
+        if (displayText.status) {
             let hotel = displayText.hotel;
             return (
                 <>
@@ -50,7 +47,7 @@ const Dashboard = () => {
                 </>
             );
         }
-        else{
+        else {
             return (
                 <>
                     <h3>{displayText.message}</h3>
@@ -62,17 +59,17 @@ const Dashboard = () => {
     const cookies = new Cookies;
     let token = cookies.get('jwt');
     let isJwtSet = token !== undefined;
+    const { isExpired } = useJwt(token);
 
     // checking of jwt expiry anytime dom changes
     useEffect(() => {
-       if (isExpired(token)) {
+        if (isExpired) {
             cookies.remove('jwt');
             isJwtSet = false;
-       } 
+        }
     });
 
-    if(isJwtSet)
-    {
+    if (isJwtSet) {
         // if token is existing, fetch the data from the token
         const tokenData = decodeToken(token);
         const user = tokenData.name;
@@ -81,25 +78,26 @@ const Dashboard = () => {
             <>
                 <nav>
                     <h1>RTAdmin</h1>
-                    <a href="/hotel"> <FaHotel /> Add Hotel</a>
-                    <button>Logout <FiLogOut /> </button>
+                    <div id="left">
+                        <a href="/hotel"> <FaHotel /> Add Hotel</a>
+                        <button>Logout <FiLogOut /> </button>
+                    </div>
                 </nav>
                 <main>
                     <h1>Hello, {user}</h1>
-                    <form onSubmit={handleSearch}>
-                    <input type="text" name="search" id="search" required onChange={e => setSearchText(e.target.value)}/>
-                    <button id="search-button"><BsSearch /></button>
+                    <form id="search-area" onSubmit={handleSearch}>
+                        <input type="text" name="search" id="search" required onChange={e => setSearchText(e.target.value)} />
+                        <button id="search-button"><BsSearch /></button>
+                        <div id="search-result">
+                            <SearchResult />
+                        </div>
                     </form>
-                    <div id="search-result">
-                        <SearchResult />
-                    </div>
                 </main>
             </>
         );
     }
-    else
-    {
-        navigate('/login'); //when token is expired, redirect back to login page
+    else{
+        navigate("/login")
     }
 }
 
