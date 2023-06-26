@@ -49,16 +49,16 @@ const Login = () => {
     return (
         <div id='login'>
             <div id="login-tab">
-                <img src="" alt="" srcset="" />
-                <form onSubmit={handleSubmit}>
+                <h1 id='logo'>RTAdmin</h1>
+                <form id='login-form' onSubmit={handleSubmit}>
                     <h3>Sign in to RTAdmin</h3>
                     <table>
                         <tbody>
                         <tr><td><label htmlFor="uname">Username</label></td><td><input type="text" name="uname" id="uname" required onChange={(event)=>{setUsername(event.target.value)}}/></td></tr>
                         <tr><td><label htmlFor="pass">Password</label></td><td><input type="password" name="pass" id="pass" required onChange={(event)=>{setPassword(SHA512(event.target.value).toString())}}/></td></tr>
+                        <tr><td></td><td><input type="submit" value="Login" id="loginSubmit" /></td></tr>
                         </tbody>
                     </table>
-                    <input type="submit" value="Login" id="loginSubmit" />
                 </form>
             </div>
         </div>
