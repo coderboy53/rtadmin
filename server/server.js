@@ -77,17 +77,17 @@ app.post("/api/hotel/add", async (req, res) => {
     // if the state input has not been given, set it to be an empty string
     if(!data.state)
     {
-        data = {...data, ...{state: ""}};
+        data = {...data, ...{state: "NA"}};
     }
     // if the zipCode input has not been given, set it to be an empty string
     if(!data.zipCode)
     {
-        data = {...data, ...{zipCode: ""}};
+        data = {...data, ...{zipCode: "NA"}};
     }
     // if the telNo input has not been given, set it to be an empty string
     if(!data.telNo)
     {
-        data = {...data, ...{telNo: ""}};
+        data = {...data, ...{telNo: "NA"}};
     }
     // insert the data from the form into the db
     connection.execute(`INSERT INTO Hotel ([Hotel_Name], [Hotel_Address], [City], [State], [Latitude], [Room_Count], [Country], [Star_Rating], [Hotel_Sort_Name], [Zip_Code], [Telephone_Number], [Longitude], [Property_ID]) VALUES ("${data.hName}","${data.hAdd}","${data.city}", "${data.state}", "${data.latitude}", ${data.rCount}, "${data.country}", "${data.starRate}", "${data.hSortName}", "${data.zipCode}", "${data.telNo}", "${data.longitude}", "${data.propId}")`)
@@ -111,17 +111,17 @@ app.put('/api/hotel/update', async (req, res) => {
     // if the state input has not been given, set it to be an empty string
     if(!data.state)
     {
-        data = {...data, ...{state: ""}};
+        data = {...data, ...{state: "NA"}};
     }
     // if the zipCode input has not been given, set it to be an empty string
     if(!data.zipCode)
     {
-        data = {...data, ...{zipCode: ""}};
+        data = {...data, ...{zipCode: "NA"}};
     }
     // if the telNo input has not been given, set it to be an empty string
     if(!data.telNo)
     {
-        data = {...data, ...{telNo: ""}};
+        data = {...data, ...{telNo: "NA"}};
     }
     // update details
     connection.execute(`UPDATE Hotel SET [Hotel_Address] = "${data.hAdd}", [City] = "${data.city}", [State] = "${data.state}", [Latitude] = "${data.latitude}", [Room_Count] = ${data.rCount}, [Country] = "${data.country}", [Star_Rating] = "${data.starRate}", [Hotel_Sort_Name] = "${data.hSortName}", [Zip_Code] = "${data.zipCode}", [Telephone_Number] = "${data.telNo}", [Longitude] = "${data.longitude}" , [Property_ID] = "${data.propId}" WHERE [Hotel_Name] = "${data.hName}"`)
