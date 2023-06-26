@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {decodeToken, useJwt } from "react-jwt";
+import { decodeToken, useJwt } from "react-jwt";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs"
@@ -69,6 +69,14 @@ const Dashboard = () => {
         }
     });
 
+    // for logout
+    const logout = () => {
+        cookies.remove('jwt');
+        isJwtSet = false;
+        navigate('/login')
+    };
+
+    //final component output
     if (isJwtSet) {
         // if token is existing, fetch the data from the token
         const tokenData = decodeToken(token);
@@ -77,15 +85,20 @@ const Dashboard = () => {
         return (
             <>
                 <nav>
-                    <h1>RTAdmin</h1>
+                    <div id="title">
+                        <h1>RTAdmin</h1>
+                    </div>
                     <div id="left">
-                        <a href="/hotel"> <FaHotel /> Add Hotel</a>
-                        <button>Logout <FiLogOut /> </button>
+                        <button onClick={(e) => {navigate('/hotel')}}>
+                            <FaHotel /> Add Hotel
+                        </button>
+                        <button onClick={logout} id="logout">Logout <FiLogOut /> </button>
                     </div>
                 </nav>
-                <main>
+                <main id="mainSection">
                     <h1>Hello, {user}</h1>
                     <form id="search-area" onSubmit={handleSearch}>
+                        <h2>Search for a client hotel</h2>
                         <input type="text" name="search" id="search" required onChange={e => setSearchText(e.target.value)} />
                         <button id="search-button"><BsSearch /></button>
                         <div id="search-result">
@@ -96,7 +109,7 @@ const Dashboard = () => {
             </>
         );
     }
-    else{
+    else {
         navigate("/login")
     }
 }
