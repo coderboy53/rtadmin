@@ -1,3 +1,6 @@
+*{
+    margin: 0;
+}
 #login{
     display: flex;
     align-content: center;
@@ -5,17 +8,38 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
+    background-image: linear-gradient(white,rgb(101, 215, 215));
+    margin: 0;
 }
 #login-tab{
     display: flex;
+    flex-direction: row;
     align-items: center;
     width: 700px;
     height: 400px;
-    border: solid blue 5px;
-    border-radius: 10px;
+    border: solid 5px;
+    border-color: linear-gradient();
+    border-radius: 5px;
     padding: 5px;
+    justify-content: right;
+    background-color: rgb(10, 10, 10, 30%);
 }
 
+#logo, #login-form{
+    width: 100%;
+}
+#logo{
+    text-align: center;
+}
+#login-form{
+    padding: 10px;
+}
 #loginSubmit {
-    align-self: flex-start;
+    position: relative;
+    bottom: 0px;
+    width: 70px;
+}
+
+label{
+    width: 70px;
 }

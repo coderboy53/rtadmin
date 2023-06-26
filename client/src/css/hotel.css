@@ -1,3 +1,9 @@
+#hotelSection {
+    padding: 5px;
+    height: 88vh;
+    background: linear-gradient(135deg ,white, rgb(214, 155, 203));
+}
+
 .left {
     display: block;
     float: left;
@@ -19,10 +25,17 @@ input, select{
 
 select{
     background-color: white;
-    width: 30%;
+    width: 166.4px;
     max-width: 185px;
 }
 
-@media screen {
-    
+#hotelForm {
+    padding-top: 10px;
+}
+
+#buttonGroup{
+    display: flex;
+    width: 50%;
+    max-width: 350px;
+    justify-content: space-between;
 }
