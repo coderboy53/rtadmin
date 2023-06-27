@@ -80,4 +80,11 @@ main > h1{
     max-width: 600px;
     margin-top: 30px;
 }
+#search-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+}
 /* main section styles end*/
