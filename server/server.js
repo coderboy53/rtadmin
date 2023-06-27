@@ -97,6 +97,7 @@ app.post("/api/hotel/add", async (req, res) => {
     .catch(error => {
         console.error(error); // log out errors
     });
+    res.status(200).json({message: 'Hotel added succesfully!'});
 });
 
 //route for updating hotel
@@ -131,4 +132,5 @@ app.put('/api/hotel/update', async (req, res) => {
     .catch(error => {
         console.error(error); // log out errors
     });
+    res.status(200).json({message: 'Hotel updated succesfully!'});
 });
