@@ -39,11 +39,17 @@ const Dashboard = () => {
             let hotel = displayText.hotel;
             return (
                 <>
-                    <h3>{displayText.message}</h3>
-                    <p>{hotel.Hotel_Address}</p>
-                    <p>{hotel.State}</p>
-                    <p>{hotel.Country}</p>
-                    <p>{hotel.Zip_Code}</p>
+                    <h3>{displayText.message}</h3><br />
+                    <table border={2}>
+                        <tbody>
+                            <tr><td>Hotel Name</td><td>{hotel.Hotel_Name}</td></tr>
+                            <tr><td>Star Rating</td><td>{hotel.Star_Rating}</td></tr>
+                            <tr><td>Hotel Address</td><td>{hotel.Hotel_Address}</td></tr>
+                            <tr><td>State</td><td>{hotel.State}</td></tr>
+                            <tr><td>Country</td><td>{hotel.Country}</td></tr>
+                            <tr><td>Zip Code</td><td>{hotel.Zip_Code}</td></tr>
+                        </tbody>
+                    </table>
                 </>
             );
         }
