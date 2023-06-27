@@ -120,7 +120,7 @@ const Hotel = () => {
                             <input type="text" name="country" id="country" required onChange={handleChange} /><br />
                             <label htmlFor="starRate">Star Rating:<span style={{ color: 'red' }}>*</span></label>
                             <select name="starRate" id="starRate" required onChange={handleChange}>
-                                <option value="null" disabled selected>Select</option>
+                                <option value="" label='Select' disabled selected></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
