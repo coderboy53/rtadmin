@@ -134,3 +134,16 @@ app.put('/api/hotel/update', async (req, res) => {
     });
     res.status(200).json({message: 'Hotel updated succesfully!'});
 });
+
+app.get('/api/country', async (req, res) => {
+    let countries = await connection.query('SELECT * FROM Countries');
+    res.status(200).json({countries});
+});
+
+app.post('/api/state', async (req, res) => {
+    let countryName = req.body.countryName;
+    let countryCode = await connection.query(`SELECT * FROM Countries WHERE Country = "${countryName}"`);
+    countryCode = countryCode[0].Country_Code;
+    let states = await connection.query(`SELECT * FROM States WHERE Country_Code = ${countryCode}`);
+    res.status(200).json({states}); 
+});

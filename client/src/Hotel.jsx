@@ -9,8 +9,7 @@ const Hotel = () => {
     // states for input enabled checking and hotel form data storing
     const [enabled, setEnabled] = useState(false);
     const [hotel, setHotel] = useState({});
-
-    // const formRef = useRef()
+    const [countryName, setCountryName] = useState('');
 
     // jwt expiry and authentication handling
     const navigate = useNavigate();
@@ -19,9 +18,56 @@ const Hotel = () => {
     let isJwtSet = token !== undefined;
     const { isExpired } = useJwt(token);
 
+    const countrySelect = async (event) => {
+        try {
+            const response = await fetch('http://127.0.0.1:4242/api/country');
+            let countryOptions = await response.json();
+            countryOptions = countryOptions.countries;
+            countryOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.Country;
+                optionElement.textContent = option.Country;
+                event.target.appendChild(optionElement);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const stateSelect = async (event) => {
+        console.log(countryName);
+        if(countryName !== '')
+        {
+            try {
+                const response = await fetch('http://127.0.0.1:4242/api/state',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({countryName})
+                });
+                let stateOptions = await response.json();
+                stateOptions = stateOptions.states;
+                stateOptions.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.State;
+                    optionElement.textContent = option.State;
+                    event.target.appendChild(optionElement);
+                })
+            } catch (error) {
+                
+            }
+        }
+        else{
+            alert('Select a country!');
+        }
+    }
+
     // handling addition of data as object from hotel form
     const handleChange = (event) => {
         let name = event.target.name;
+        if(name==='country')
+            setCountryName(event.target.value);
         const entry = {};
         entry[name] = event.target.value;
         setHotel({ ...hotel, ...entry });
@@ -83,6 +129,8 @@ const Hotel = () => {
         navigate('/login')
     }
 
+    console.log(hotel);
+
     //final component output
     if (isJwtSet) {
         return (
@@ -109,7 +157,10 @@ const Hotel = () => {
                             <label htmlFor="city">City:<span style={{ color: 'red' }}>*</span></label>
                             <input type="text" name="city" id="city" required onChange={handleChange} /><br />
                             <label htmlFor="state">State:</label>
-                            <input type="text" name="state" id="state" onChange={handleChange} /><br />
+                            {/* <input type="text" name="state" id="state" onChange={handleChange} /><br /> */}
+                            <select name="state" id="state" required onClick={stateSelect} onChange={handleChange}>
+                                <option value="" label='Select' disabled selected></option>
+                            </select>
                             <label htmlFor="latitude">Latitude:<span style={{ color: 'red' }}>*</span></label>
                             <input type="text" name="latitude" id="latitude" required onChange={handleChange} /><br />
                             <label htmlFor="rCount">Room Count:<span style={{ color: 'red' }}>*</span></label>
@@ -117,7 +168,10 @@ const Hotel = () => {
                         </div>
                         <div className="right">
                             <label htmlFor="country">Country:<span style={{ color: 'red' }}>*</span></label>
-                            <input type="text" name="country" id="country" required onChange={handleChange} /><br />
+                            {/* <input type="text" name="country" id="country" required onChange={handleChange} /><br /> */}
+                            <select name='country' id='country' required onClick={countrySelect} onChange={handleChange} >
+                                <option value="" label='Select' disabled selected></option>
+                            </select><br />
                             <label htmlFor="starRate">Star Rating:<span style={{ color: 'red' }}>*</span></label>
                             <select name="starRate" id="starRate" required onChange={handleChange}>
                                 <option value="" label='Select' disabled selected></option>
