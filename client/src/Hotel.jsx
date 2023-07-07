@@ -36,18 +36,23 @@ const Hotel = () => {
 
     const stateSelect = async (event) => {
         console.log(countryName);
-        if(countryName !== '')
-        {
+        if (countryName !== '') {
             try {
-                const response = await fetch('http://127.0.0.1:4242/api/state',{
+                const response = await fetch('http://127.0.0.1:4242/api/state', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({countryName})
+                    body: JSON.stringify({ countryName })
                 });
                 let stateOptions = await response.json();
                 stateOptions = stateOptions.states;
+                let count = event.target.childElementCount;
+                while (count > 1) {
+                    let child = event.target.lastElementChild;
+                    event.target.removeChild(child);
+                    count--;
+                }
                 stateOptions.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.State;
@@ -55,10 +60,10 @@ const Hotel = () => {
                     event.target.appendChild(optionElement);
                 })
             } catch (error) {
-                
+
             }
         }
-        else{
+        else {
             alert('Select a country!');
         }
     }
@@ -66,7 +71,7 @@ const Hotel = () => {
     // handling addition of data as object from hotel form
     const handleChange = (event) => {
         let name = event.target.name;
-        if(name==='country')
+        if (name === 'country')
             setCountryName(event.target.value);
         const entry = {};
         entry[name] = event.target.value;
