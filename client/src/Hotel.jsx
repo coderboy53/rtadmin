@@ -165,7 +165,7 @@ const Hotel = () => {
                             {/* <input type="text" name="state" id="state" onChange={handleChange} /><br /> */}
                             <select name="state" id="state" required onClick={stateSelect} onChange={handleChange}>
                                 <option value="" label='Select' disabled selected></option>
-                            </select>
+                            </select><br />
                             <label htmlFor="latitude">Latitude:<span style={{ color: 'red' }}>*</span></label>
                             <input type="text" name="latitude" id="latitude" required onChange={handleChange} /><br />
                             <label htmlFor="rCount">Room Count:<span style={{ color: 'red' }}>*</span></label>
